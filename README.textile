@@ -1,0 +1,48 @@
+h1. DeliverLater
+
+A 2-phase database-driven ActionMailer delivery method.
+
+h2. Usage
+
+Install the plugin:
+
+  $ ./script/plugin install git://github.com/mtodd/deliver_later.git
+
+This will automatically call the Rake task to run the migration. If you do not
+run the installer (such as cloning it manually), be sure to run the install
+task like this:
+
+  $ rake deliver_later:install
+
+Now that the plugin is installed, you'll want to enable the deferred delivery
+in your application. Edit your environment file (such as
+@config/environments/production.rb@ if you want to add this to your production
+environment) and change the delivery method from something like @:smtp@ to
+@:smtp_later@.
+
+  config.actionmailer.delivery_method = :smtp_later
+
+This will enable the 2-phase delivery in the system and begin queueing emails.
+
+To enable the 2nd phase delivery, you will want to set up a @cron@ task as:
+
+  /path/to/app/current/script/runner 'QueuedMailing.deliver_queued!'
+
+Of course you will need the rest of the standard @cron@ information such as
+timimng, user, etc.
+
+There's an alternative method to @QueuedMailing.deliver_queued!@ which adds
+calls an exception on any failed emails so that your Exception Notifier can
+then send a notification of the failure. This method can be called with 
+@QueuedMailing.deliver_queued_with_notification_on_failure!@.
+
+If all of your emails have been sent successfully, you can periodically run the
+@QueuedMailing.purge_sent!@ method via @./script/runner@ to delete any
+successfully delivered emails.
+
+Emails have problems being sent (an exception is raised in the process of
+delivery) are marked as read and the exception message and backtrace are saved
+with the email.
+
+When you call @QueuedMailing.deliver_queued!@, emails that were problematic are
+also included in the emails to retry automatically.
