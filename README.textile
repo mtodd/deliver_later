@@ -29,7 +29,7 @@ To enable the 2nd phase delivery, you will want to set up a @cron@ task as:
   /path/to/app/current/script/runner 'QueuedMailing.deliver_queued!'
 
 Of course you will need the rest of the standard @cron@ information such as
-timimng, user, etc.
+timing, user, etc.
 
 There's an alternative method to @QueuedMailing.deliver_queued!@ which adds
 calls an exception on any failed emails so that your Exception Notifier can
