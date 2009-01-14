@@ -55,71 +55,92 @@
     <h2>Dependencies</h2>
 <p>Rails 1.1.3 or greater</p>
 <h2>Install</h2>
-<p>Install the plugin:
+<p>
+  
+  <p>Install the plugin:</p>
 
-  $ ./script/plugin install git://github.com/mtodd/deliver_later.git
 
-This will automatically call the Rake task to run the migration. If you do not
-run the installer (such as cloning it manually), be sure to run the install
-task like this:
+  	<pre><code>$ ./script/plugin install git://github.com/mtodd/deliver_later.git</code></pre>
 
-  $ rake deliver_later:install
 
-Now that the plugin is installed, you'll want to enable the deferred delivery
-in your application. Edit your environment file (such as
-@config/environments/production.rb@ if you want to add this to your production
-environment) and change the delivery method from something like @:smtp@ to
-@:smtp_later@.
+  	<p>This will automatically call the Rake task to run the migration. If you do not
+  run the installer (such as cloning it manually), be sure to run the install
+  task like this:</p>
 
-  config.actionmailer.delivery_method = :smtp_later
 
-This will enable the 2-phase delivery in the system and begin queueing emails.
+  	<pre><code>$ rake deliver_later:install</code></pre>
 
-To enable the 2nd phase delivery, you will want to set up a @cron@ task as:
 
-  /path/to/app/current/script/runner 'QueuedMailing.deliver_queued!'
+  	<p>Now that the plugin is installed, you&#8217;ll want to enable the deferred delivery
+  in your application. Edit your environment file (such as
+  <code>config/environments/production.rb</code> if you want to add this to your production
+  environment) and change the delivery method from something like <code>:smtp</code> to
+  <code>:smtp_later</code>.</p>
 
-Of course you will need the rest of the standard @cron@ information such as
-timimng, user, etc.
 
-There's an alternative method to @QueuedMailing.deliver_queued!@ which adds
-calls an exception on any failed emails so that your Exception Notifier can
-then send a notification of the failure. This method can be called with 
-@QueuedMailing.deliver_queued_with_notification_on_failure!@.
+  	<pre><code>config.actionmailer.delivery_method = :smtp_later</code></pre>
 
-If all of your emails have been sent successfully, you can periodically run the
-@QueuedMailing.purge_sent!@ method via @./script/runner@ to delete any
-successfully delivered emails.
 
-Emails have problems being sent (an exception is raised in the process of
-delivery) are marked as read and the exception message and backtrace are saved
-with the email.
+  	<p>This will enable the 2-phase delivery in the system and begin queueing emails.</p>
 
-When you call @QueuedMailing.deliver_queued!@, emails that were problematic are
-also included in the emails to retry automatically.
+
+  	<p>To enable the 2nd phase delivery, you will want to set up a <code>cron</code> task as:</p>
+
+
+  	<pre><code>/path/to/app/current/script/runner 'QueuedMailing.deliver_queued!'</code></pre>
+
+
+  	<p>Of course you will need the rest of the standard <code>cron</code> information such as
+  timimng, user, etc.</p>
+
+
+  	<p>There&#8217;s an alternative method to <code>QueuedMailing.deliver_queued!</code> which adds
+  calls an exception on any failed emails so that your Exception Notifier can
+  then send a notification of the failure. This method can be called with 
+  <code>QueuedMailing.deliver_queued_with_notification_on_failure!</code>.</p>
+
+
+  	<p>If all of your emails have been sent successfully, you can periodically run the
+  <code>QueuedMailing.purge_sent!</code> method via <code>./script/runner</code> to delete any
+  successfully delivered emails.</p>
+
+
+  	<p>Emails have problems being sent (an exception is raised in the process of
+  delivery) are marked as read and the exception message and backtrace are saved
+  with the email.</p>
+
+
+  	<p>When you call <code>QueuedMailing.deliver_queued!</code>, emails that were problematic are
+  also included in the emails to retry automatically.</p>
+  
 </p>
 <h2>License</h2>
-<p>"The MIT License":http://www.opensource.org/licenses/mit-license.php
+<p><p><a href="http://www.opensource.org/licenses/mit-license.php">The <span class="caps">MIT</span> License</a></p>
 
-Copyright (c) 2008 Matt Todd, Highgroove Studios.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
+	<p>Copyright&#169; 2008 Matt Todd, Highgroove Studios.</p>
+
+
+	<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &#8220;Software&#8221;), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+furnished to do so, subject to the following conditions:</p>
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+	<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+
+
+	<p><span class="caps">THE SOFTWARE IS PROVIDED</span> &#8220;AS IS&#8221;, <span class="caps">WITHOUT WARRANTY OF ANY KIND</span>, EXPRESS OR
+<span class="caps">IMPLIED</span>, INCLUDING <span class="caps">BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY</span>,
+<span class="caps">FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT</span>. IN <span class="caps">NO EVENT SHALL THE</span>
+<span class="caps">AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM</span>, DAMAGES <span class="caps">OR OTHER</span>
+<span class="caps">LIABILITY</span>, WHETHER <span class="caps">IN AN ACTION OF CONTRACT</span>, TORT <span class="caps">OR OTHERWISE</span>, ARISING <span class="caps">FROM</span>,
+<span class="caps">OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN</span>
+<span class="caps">THE SOFTWARE</span>.</p>
+
 </p>
 <h2>Authors</h2>
 <p>Matt Todd (mtodd@highgroove.com)</p>
